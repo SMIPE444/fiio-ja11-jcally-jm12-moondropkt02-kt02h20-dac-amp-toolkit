@@ -157,14 +157,14 @@ mod tests {
         // The safety model refuses to pick another image automatically when the device is not
         // what we expected — a human has to look.
         let want = fp(0x2972, 0x0102);
-        let obs = saw(Some(fp(0x31b2, 0x0111)));
+        let obs = saw(Some(fp(0x31B2, 0x2003)));
         let out = decide(&obs, Some(&want));
         assert!(out.is_halt());
         assert!(!out.is_success());
         assert!(out.advice().contains("STOP"));
         match out {
             ReprobeOutcome::Mismatch { found, expected } => {
-                assert_eq!(found.short(), "31b2:0111");
+                assert_eq!(found.short(), "0x31B2:0x2003");
                 assert_eq!(expected.short(), "2972:0102");
             }
             other => panic!("expected Mismatch, got {other:?}"),
@@ -174,7 +174,7 @@ mod tests {
     #[test]
     fn an_unexpected_identity_is_not_a_halt_when_nothing_was_expected() {
         // Manufacturing a halt from an inferred expectation would turn a guess into an alarm.
-        let obs = saw(Some(fp(0x31b2, 0x0111)));
+        let obs = saw(Some(fp(0x31B2, 0x2003)));
         let out = decide(&obs, None);
         assert!(!out.is_halt());
         assert!(out.is_success());
