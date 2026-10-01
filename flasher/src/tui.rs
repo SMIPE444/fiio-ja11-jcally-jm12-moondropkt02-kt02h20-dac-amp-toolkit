@@ -86,7 +86,7 @@ impl App {
         }
         self.devs = match phase {
             0 => vec![],
-            1 | 2 => vec![mock(0x31b2, 0x0111, "KT02H20 HIFI Audio", "KTMicro", Mode::KtStock, true)],
+            1 | 2 => vec![mock(0x31B2, 0x2003, "KT02H20 HIFI Audio", "KTMicro", Mode::KtStock, true)],
             3 | 4 => vec![mock(0x8888, 0xcdc0, "KTMicro 2021-07-15", "KTMicro", Mode::Bootloader, false)],
             _ => vec![mock(0x2972, 0x0102, "JadeAudio JA11", "FIIO", Mode::Ja11, true)],
         };
