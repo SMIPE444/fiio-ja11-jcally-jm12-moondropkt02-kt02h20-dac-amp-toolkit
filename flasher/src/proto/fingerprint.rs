@@ -112,34 +112,34 @@ mod tests {
 
     #[test]
     fn short_and_parse_round_trip() {
-        let fp = DeviceFingerprint::new(0x31b2, 0x0111);
-        assert_eq!(fp.short(), "31b2:0111");
-        assert_eq!(DeviceFingerprint::parse_short("31b2:0111").unwrap(), fp);
-        assert_eq!(DeviceFingerprint::parse_short("0x31B2:0x0111").unwrap(), fp);
+        let fp = DeviceFingerprint::new(0x31B2, 0x2003);
+        assert_eq!(fp.short(), "0x31B2:0x2003");
+        assert_eq!(DeviceFingerprint::parse_short("0x31B2:0x2003").unwrap(), fp);
+        assert_eq!(DeviceFingerprint::parse_short("0x31B2:0x2003").unwrap(), fp);
         assert!(DeviceFingerprint::parse_short("garbage").is_err());
     }
 
     #[test]
     fn vid_pid_mismatch_is_no_match() {
-        let pat = DevicePattern { vid: 0x31b2, pid: 0x0111, bcd_device: None, descriptor_sha256: None };
+        let pat = DevicePattern { vid: 0x31B2, pid: 0x2003, bcd_device: None, descriptor_sha256: None };
         assert_eq!(pat.score(&DeviceFingerprint::new(0x2972, 0x0102)), MatchStrength::NoMatch);
     }
 
     #[test]
     fn vid_pid_only_without_descriptor() {
-        let pat = DevicePattern { vid: 0x31b2, pid: 0x0111, bcd_device: None, descriptor_sha256: None };
-        assert_eq!(pat.score(&DeviceFingerprint::new(0x31b2, 0x0111)), MatchStrength::VidPidOnly);
+        let pat = DevicePattern { vid: 0x31B2, pid: 0x2003, bcd_device: None, descriptor_sha256: None };
+        assert_eq!(pat.score(&DeviceFingerprint::new(0x31B2, 0x2003)), MatchStrength::VidPidOnly);
     }
 
     #[test]
     fn descriptor_hash_upgrades_to_verified() {
         let pat = DevicePattern {
-            vid: 0x31b2,
-            pid: 0x0111,
+            vid: 0x31B2,
+            pid: 0x2003,
             bcd_device: None,
             descriptor_sha256: Some("ABCD".into()),
         };
-        let mut fp = DeviceFingerprint::new(0x31b2, 0x0111);
+        let mut fp = DeviceFingerprint::new(0x31B2, 0x2003);
         assert_eq!(pat.score(&fp), MatchStrength::VidPidOnly); // no hash on device yet
         fp.descriptor_sha256 = Some("abcd".into()); // case-insensitive
         assert_eq!(pat.score(&fp), MatchStrength::Verified);
@@ -150,12 +150,12 @@ mod tests {
     #[test]
     fn bcd_device_must_match_when_required() {
         let pat = DevicePattern {
-            vid: 0x31b2,
-            pid: 0x0111,
+            vid: 0x31B2,
+            pid: 0x2003,
             bcd_device: Some(0x0100),
             descriptor_sha256: None,
         };
-        let mut fp = DeviceFingerprint::new(0x31b2, 0x0111);
+        let mut fp = DeviceFingerprint::new(0x31B2, 0x2003);
         assert_eq!(pat.score(&fp), MatchStrength::NoMatch);
         fp.bcd_device = Some(0x0100);
         assert_eq!(pat.score(&fp), MatchStrength::VidPidOnly);
