@@ -22,8 +22,8 @@
 # vendor-only match, or an unrelated device could pick up these rules.
 
 # Stock KTMicro KT02H20 (and other 0x31b2 dongles) — normal mode
-SUBSYSTEM=="usb", ATTR{idVendor}=="31b2", TAG+="uaccess"
-SUBSYSTEM=="usb", ATTR{idVendor}=="31b2", GROUP="plugdev", MODE="0660"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0x31B2", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0x31B2", GROUP="plugdev", MODE="0660"
 
 # FiiO / JadeAudio JA11 — already-flashed, normal mode
 SUBSYSTEM=="usb", ATTR{idVendor}=="2972", ATTR{idProduct}=="0102", TAG+="uaccess"
