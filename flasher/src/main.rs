@@ -28,8 +28,8 @@ mod serialtransport;
 mod tui;
 mod usbtransport;
 
-const KTMICRO_VID: u16 = 0x31b2; // stock KTMicro KT02H20 dongles
-const NORMAL_PID: u16 = 0x0111;
+const KTMICRO_VID: u16 = 0x31B2; // stock KTMicro KT02H20 dongles
+const NORMAL_PID: u16 = 0x2003;
 const FIIO_VID: u16 = 0x2972; // FiiO / JadeAudio
 const JA11_PID: u16 = 0x0102;
 const BOOT_VID: u16 = 0x8888; // KT_USB_BOOT CDC bootloader
@@ -228,7 +228,7 @@ fn open_hid(ctx: &Context) -> Result<(rusb::DeviceHandle<Context>, u8, u8, u8), 
             }
         }
     }
-    Err("no normal-mode dongle with a HID interface found (KTMicro 0x31b2:0x0111 or FiiO 0x2972:0x0102)".into())
+    Err("no normal-mode dongle with a HID interface found (KTMicro 0x31B2:0x2003 or FiiO 0x2972:0x0102)".into())
 }
 
 /// Send the "T12345678" unlock; returns a human message. Used by CLI + TUI.
