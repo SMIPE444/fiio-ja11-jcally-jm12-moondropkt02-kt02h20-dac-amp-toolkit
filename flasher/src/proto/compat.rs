@@ -219,8 +219,8 @@ pub fn template() -> CompatRecord {
             marketing_name: "JCALLY JM12".into(),
             board_revision: None,
             usb_normal: UsbId {
-                vid: "0x31b2".into(),
-                pid: "0x0111".into(),
+                vid: "0x31B2".into(),
+                pid: "0x2003".into(),
                 ..Default::default()
             },
             bootloader: Some(UsbId { vid: "0x8888".into(), pid: "0xcdc0".into(), ..Default::default() }),
